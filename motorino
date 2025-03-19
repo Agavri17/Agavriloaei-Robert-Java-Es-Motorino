@@ -1,0 +1,63 @@
+public class Motorino {
+    private String colore;
+    private double velocita;
+    private String tipo;
+    private boolean antifurto;
+
+    // Costruttore
+    public Motorino(String colore, String tipo, double velocita) {
+        this.colore = colore;
+        this.tipo = tipo;
+        this.velocita = velocita;
+        this.antifurto = false; // Valore iniziale
+    }
+
+    // Metodo per ottenere la velocità del motorino
+    public double getVelocita() {
+        return velocita;
+    }
+
+    // Metodo per accelerare
+    public void accelera(double incremento) {
+        if (!antifurto) {
+            velocita += incremento;
+        }
+    }
+
+    // Metodo per inserire l'antifurto
+    public void inserisciAntifurto() {
+        antifurto = true;
+    }
+}
+
+
+//es2
+public class MotorinoImmatricolato extends Motorino {
+    private double maxVelocita;
+    private String targa;
+
+    // Costruttore
+    public MotorinoImmatricolato(String colore, String tipo, double velocita, double maxVelocita, String targa) {
+        super(colore, tipo, velocita);
+        this.maxVelocita = maxVelocita;
+        this.targa = targa;
+    }
+
+    // Metodo per ottenere la velocità massima
+    public double getMax() {
+        return maxVelocita;
+    }
+
+    // Metodo per accelerare con controllo sulla velocità massima
+    @Override
+    public void accelera(double incremento) {
+        if (!antifurto) { // L'attributo antifurto è privato in Motorino, quindi serve un metodo getter
+            double s = getVelocita() + incremento;
+            if (s < maxVelocita) {
+                super.accelera(incremento);
+            } else {
+                super.accelera(maxVelocita - getVelocita()); // Raggiunge la maxVelocita senza superarla
+            }
+        }
+    }
+}
